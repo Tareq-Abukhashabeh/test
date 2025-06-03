@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Arwausef Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Hacker-style matrix rain background */
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow-x: hidden;
+      font-family: 'Poppins', sans-serif;
+      background: #0f0f0f;
+      color: #db2777; /* changed from #ec4899 to a deeper pink */
+      position: relative;
+      z-index: 0;
+    }
+    #matrix-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: #0f0f0f;
+    }
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #111;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: #db2777; /* deeper pink */
+      border-radius: 10px;
+      border: 2px solid #111;
+    }
+    /* Header styles */
+    header {
+      background: rgba(219, 39, 119, 0.85); /* deeper pink */
+      backdrop-filter: saturate(180%) blur(10px);
+      box-shadow: 0 4px 6px rgba(219, 39, 119, 0.5);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    nav a {
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #f9a8d4;
+    }
+    /* Profile image */
+    .profile-img {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      border: 4px solid #db2777; /* deeper pink */
+      object-fit: cover;
+      margin: 0 auto 1rem auto;
+      box-shadow: 0 0 15px #db2777;
+      transition: transform 0.3s ease;
+    }
+    .profile-img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px #f472b6;
+    }
+    /* Section headings */
+    h2 {
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 0.1em;
+    }
+    /* Cards */
+    .card {
+      background: rgba(219, 39, 119, 0.15); /* deeper pink */
+      border: 1px solid #db2777;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 0 10px #db2777;
+      transition: box-shadow 0.3s ease;
+    }
+    .card:hover {
+      box-shadow: 0 0 20px #f9a8d4;
+    }
+    /* Form inputs */
+    input, textarea {
+      background: rgba(219, 39, 119, 0.1);
+      border: 1px solid #db2777;
+      color: #db2777;
+      transition: border-color 0.3s ease;
+    }
+    input:focus, textarea:focus {
+      border-color: #f9a8d4;
+      outline: none;
+      box-shadow: 0 0 8px #f9a8d4;
+      background: rgba(249, 168, 212, 0.15);
+    }
+    /* Button */
+    button {
+      background: #db2777;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: #f9a8d4;
+      color: #111;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="matrix-canvas"></canvas>
+
+  <header>
+    <nav class="container mx-auto flex justify-between items-center p-4">
+      <h1 class="text-2xl font-orbitron font-bold tracking-widest uppercase">Arwa Hacker Girl</h1>
+      <ul class="hidden md:flex space-x-8 text-pink-200">
+        <li><a href="#about" class="hover:text-pink-400 transition">About</a></li>
+        <li><a href="#skills" class="hover:text-pink-400 transition">Skills</a></li>
+        <li><a href="#projects" class="hover:text-pink-400 transition">Projects</a></li>
+        <li><a href="#certificates" class="hover:text-pink-400 transition">certificates</a></li>
+        <li><a href="#contact" class="block hover:text-pink-400 transition">Contact</a></li>
+      </ul>
+      <button id="menu-btn" class="md:hidden text-pink-200 focus:outline-none">
+        <i class="fas fa-bars fa-lg"></i>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="hidden bg-pink-700 md:hidden">
+      <ul class="flex flex-col p-4 space-y-4 text-pink-200">
+        <li><a href="#about" class="block hover:text-pink-400 transition">About</a></li>
+        <li><a href="#skills" class="block hover:text-pink-400 transition">Skills</a></li>
+        <li><a href="#projects" class="block hover:text-pink-400 transition">Projects</a></li>
+        <li><a href="#certificates" class="block hover:text-pink-400 transition">certificates</a></li>
+        <li><a href="#contact" class="block hover:text-pink-400 transition">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="flex-grow container mx-auto px-6 py-12">
+    <section id="about" class="max-w-4xl mx-auto text-center mb-16">
+      <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixlib=rb-4.0.3&auto=format&fit=crop&w=160&q=80" alt="Profile Image" class="profile-img" />
+      <h2 class="text-4xl font-orbitron font-bold mb-4 tracking-wide">About Me</h2>
+      <p class="text-pink-300 text-lg max-w-3xl mx-auto leading-relaxed">
+        I'm Arwausef — a Red Team & Penetration Testing enthusiast who prefers real-world hacking over writing code.I live for tools, tactics, and technical attacks that mimic adversaries in the wild. I’m not a coder — I’m an operator
+      </p>
+      <p class="text-pink-300 text-lg max-w-3xl mx-auto leading-relaxed">
+I don’t write code unless I have to. My strength lies in mastering the tools that are already out there — knowing when, why, and how to use them.<br>My philosophy: "Hack smarter, not harder."       </p>
+    </section>
+
+    <section id="skills" class="max-w-4xl mx-auto mb-16">
+      <h2 class="text-4xl font-orbitron font-bold mb-8 tracking-wide text-center">Skills & Tools</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div class="card">
+          <i class="fas fa-shield-alt fa-3x mb-4"></i>
+          <h3 class="text-xl font-semibold mb-2">Penetration Testing</h3>
+          <p class="text-pink-300 text-sm">Red Team Operations & Vulnerability Assessment</p>
+        </div>
+        <div class="card">
+          <i class="fas fa-bug fa-3x mb-4"></i>
+          <h3 class="text-xl font-semibold mb-2">Ethical Hacking</h3>
+          <p class="text-pink-300 text-sm">Exploiting & Securing Systems</p>
+        </div>
+        <div class="card">
+          <i class="fas fa-network-wired fa-3x mb-4"></i>
+          <h3 class="text-xl font-semibold mb-2">Network Security</h3>
+          <p class="text-pink-300 text-sm">Firewalls, IDS/IPS & Monitoring</p>
+        </div>
+        <div class="card">
+          <i class="fas fa-terminal fa-3x mb-4"></i>
+          <h3 class="text-xl font-semibold mb-2">Scripting</h3>
+          <p class="text-pink-300 text-sm">Basic Bash & Python (Minimal Coding)</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="max-w-4xl mx-auto mb-16">
+      <h2 class="text-4xl font-orbitron font-bold mb-8 tracking-wide text-center">Projects</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div class="card flex flex-col justify-between">
+          <h3 class="text-2xl font-semibold mb-2">Red Team Simulation</h3>
+          <p class="text-pink-300 flex-grow">Led a red team exercise to identify vulnerabilities in a corporate network and improve defenses.</p>
+          <a href="#" class="inline-block mt-3 text-pink-400 hover:text-pink-600 transition underline">View Details</a>
+        </div>
+        <div class="card flex flex-col justify-between">
+          <h3 class="text-2xl font-semibold mb-2">Phishing Awareness Campaign</h3>
+          <p class="text-pink-300 flex-grow">Created training materials and simulated phishing attacks to educate employees on cybersecurity best practices.</p>
+          <a href="#" class="inline-block mt-3 text-pink-400 hover:text-pink-600 transition underline">View Details</a>
+        </div>
+      </div>
+    </section>
+
+  <section id="certificates" class="max-w-4xl mx-auto mb-16">
+    <h2 class="text-4xl font-orbitron font-bold mb-8 tracking-wide text-center">Certificates</h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+      <div class="card flex flex-col justify-center items-center p-6">
+        <i class="fas fa-certificate fa-4x mb-4"></i>
+        <h3 class="text-xl font-semibold">Certified Ethical Hacker (CEH)</h3>
+        <p class="text-pink-300 text-sm mt-2 text-center">EC-Council</p>
+      </div>
+      <div class="card flex flex-col justify-center items-center p-6">
+        <i class="fas fa-certificate fa-4x mb-4"></i>
+        <h3 class="text-xl font-semibold">CompTIA Security+</h3>
+        <p class="text-pink-300 text-sm mt-2 text-center">CompTIA</p>
+      </div>
+      <div class="card flex flex-col justify-center items-center p-6">
+        <i class="fas fa-certificate fa-4x mb-4"></i>
+        <h3 class="text-xl font-semibold">Offensive Security Certified Professional (OSCP)</h3>
+        <p class="text-pink-300 text-sm mt-2 text-center">Offensive Security</p>
+      </div>
+      <div class="card flex flex-col justify-center items-center p-6">
+        <i class="fas fa-certificate fa-4x mb-4"></i>
+        <h3 class="text-xl font-semibold">Cisco Certified CyberOps Associate</h3>
+        <p class="text-pink-300 text-sm mt-2 text-center">Cisco</p>
+      </div>
+    </div>
+  </section>
+  <section id="contact" class="max-w-4xl mx-auto text-center">
+    <h2 class="text-4xl font-orbitron font-bold mb-8 tracking-wide">Contact Me</h2>
+    <form class="card max-w-md mx-auto" onsubmit="handleSubmit(event)">
+      <div class="mb-4 text-left">
+        <label for="name" class="block mb-1 font-semibold">Name</label>
+        <input type="text" id="name" name="name" required class="w-full p-2 rounded bg-transparent border border-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-400" />
+      </div>
+      <div class="mb-4 text-left">
+        <label for="email" class="block mb-1 font-semibold">Email</label>
+        <input type="email" id="email" name="email" required class="w-full p-2 rounded bg-transparent border border-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-400" />
+      </div>
+      <div class="mb-4 text-left">
+        <label for="message" class="block mb-1 font-semibold">Message</label>
+        <textarea id="message" name="message" rows="4" required class="w-full p-2 rounded bg-transparent border border-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-400"></textarea>
+      </div>
+      <button type="submit" class="w-full py-2 rounded font-semibold text-gray-900 hover:bg-pink-300 transition">Send Message</button>
+    </form>
+    <p id="form-message" class="mt-4 text-pink-300"></p>
+  </section>
+
+  </main>
+
+  <footer class="bg-gradient-to-r from-pink-600 via-pink-500 to-pink-700 text-pink-100 text-center py-6 mt-auto">
+    <div class="container mx-auto flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-6">
+      <a href="https://github.com/Tareq-Abukhashabeh/Notes-summary/blob/main/README.md" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 bg-pink-700 hover:bg-pink-500 text-pink-100 font-semibold py-2 px-4 rounded shadow transition transform hover:scale-110">
+        <i class="fab fa-github fa-lg"></i>
+        <span>GitHub</span>
+      </a>
+      <a href="https://www.linkedin.com/in/arwa-barakat-8986ab35b/" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 bg-pink-700 hover:bg-pink-500 text-pink-100 font-semibold py-2 px-4 rounded shadow transition transform hover:scale-110">
+        <i class="fab fa-linkedin fa-lg"></i>
+        <span>LinkedIn</span>
+      </a>
+    </div>
+    <p class="mt-4 text-pink-200">&copy; 2025 Arwa Hacker Girl. All rights reserved @DRX0.</p>
+  </footer>
+
+  <script>
+    // Matrix rain effect
+    const canvas = document.getElementById('matrix-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()-_=+[]{}|;:,.<>?'.split('');
+    const fontSize = 16;
+    const columns = Math.floor(width / fontSize);
+    const drops = new Array(columns).fill(1);
+
+    function draw() {
+      ctx.fillStyle = 'rgba(15, 15, 15, 0.1)';
+      ctx.fillRect(0, 0, width, height);
+
+      ctx.fillStyle = '#ec4899'; // pink color
+      ctx.font = fontSize + 'px monospace';
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters[Math.floor(Math.random() * letters.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    setInterval(draw, 50);
+
+    // Responsive menu toggle
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Contact form submission handler
+    function handleSubmit(event) {
+      event.preventDefault();
+      const formMessage = document.getElementById('form-message');
+      formMessage.textContent = 'Thank you for reaching out! I will get back to you soon.';
+      event.target.reset();
+    }
+
+    // Resize canvas on window resize
+    window.addEventListener('resize', () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+    });
+  </script>
+</body>
+</html>
